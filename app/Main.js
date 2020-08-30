@@ -4,7 +4,8 @@ import { BrowserRouter, Switch, Route } from "react-router-dom"
 import { useImmerReducer } from "use-immer"
 import { Client as Styletron } from "styletron-engine-atomic"
 import { Provider as StyletronProvider } from "styletron-react"
-import { LightTheme, BaseProvider, styled } from "baseui"
+import { LightTheme, DarkTheme, BaseProvider, styled } from "baseui"
+import { ToasterContainer } from "baseui/toast"
 import Axios from "axios"
 Axios.defaults.baseURL = "http://localhost:8080"
 
@@ -13,7 +14,6 @@ import DispatchContext from "./DispatchContext"
 
 // Our componetns
 import Header from "./components/Header"
-import Footer from "./components/Footer"
 import Home from "./components/Home"
 import HomeGuest from "./components/HomeGuest"
 
@@ -27,7 +27,8 @@ function Main() {
       token: localStorage.getItem("baseWebAppToken"),
       username: localStorage.getItem("baseWebAppUsername"),
       avatar: localStorage.getItem("baseWebAppAvatar")
-    }
+    },
+    lightTheme: true
   }
 
   function ourReducer(draft, action) {
@@ -40,7 +41,8 @@ function Main() {
         draft.loggedIn = false
         draft.user = null
         return
-      case "flashMessage":
+      case "handleTheme":
+        draft.lightTheme = !draft.lightTheme
         return
     }
   }
@@ -60,23 +62,22 @@ function Main() {
   }, [state.loggedIn])
 
   return (
-    <StateContext.Provider value={state}>
-      <DispatchContext.Provider value={dispatch}>
-        <StyletronProvider value={engine}>
-          <BaseProvider theme={LightTheme}>
+    <StyletronProvider value={engine}>
+      <BaseProvider theme={state.lightTheme ? LightTheme : DarkTheme}>
+        <StateContext.Provider value={state}>
+          <DispatchContext.Provider value={dispatch}>
             <BrowserRouter>
-              <Header />
-              <Switch>
-                <Route path="/" exact>
-                  {state.loggedIn ? <Home /> : <HomeGuest />}
-                </Route>
-              </Switch>
-              <Footer />
+              <ToasterContainer autoHideDuration={2000}>
+                <Header />
+                <Switch>
+                  <Route path="/">{state.loggedIn ? <Home /> : <HomeGuest />}</Route>
+                </Switch>
+              </ToasterContainer>
             </BrowserRouter>
-          </BaseProvider>
-        </StyletronProvider>
-      </DispatchContext.Provider>
-    </StateContext.Provider>
+          </DispatchContext.Provider>
+        </StateContext.Provider>
+      </BaseProvider>
+    </StyletronProvider>
   )
 }
 

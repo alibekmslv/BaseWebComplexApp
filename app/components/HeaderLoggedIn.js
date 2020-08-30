@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react"
 import { Button, KIND, SHAPE } from "baseui/button"
-import { StyledNavigationItem } from "baseui/header-navigation"
+import { ALIGN, StyledNavigationItem, StyledNavigationList } from "baseui/header-navigation"
 import Search from "baseui/icon/search"
 import Overflow from "baseui/icon/overflow"
 import { Avatar } from "baseui/avatar"
@@ -17,7 +17,7 @@ function HeaderLoggedIn() {
     appDispatch({ type: "logout" })
   }
   return (
-    <>
+    <StyledNavigationList $align={ALIGN.right}>
       <StyledNavigationItem>
         <Button kind={KIND.tertiary} shape={SHAPE.pill}>
           <Search title="Search" />
@@ -35,7 +35,7 @@ function HeaderLoggedIn() {
       <StyledNavigationItem>
         <Button onClick={handleSignOut}>Sign Out</Button>
       </StyledNavigationItem>
-    </>
+    </StyledNavigationList>
   )
 }
 
