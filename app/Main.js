@@ -1,21 +1,16 @@
 import React, { useEffect } from "react"
 import ReactDOM from "react-dom"
-import { BrowserRouter, Switch, Route } from "react-router-dom"
 import { useImmerReducer } from "use-immer"
 import { Client as Styletron } from "styletron-engine-atomic"
 import { Provider as StyletronProvider } from "styletron-react"
 import { LightTheme, DarkTheme, BaseProvider, styled } from "baseui"
-import { ToasterContainer } from "baseui/toast"
 import Axios from "axios"
 Axios.defaults.baseURL = "http://localhost:8080"
 
 import StateContext from "./StateContext"
 import DispatchContext from "./DispatchContext"
 
-// Our componetns
-import Header from "./components/Header"
-import Home from "./components/Home"
-import HomeGuest from "./components/HomeGuest"
+import App from "./App"
 
 const engine = new Styletron()
 
@@ -66,14 +61,7 @@ function Main() {
       <BaseProvider theme={state.lightTheme ? LightTheme : DarkTheme}>
         <StateContext.Provider value={state}>
           <DispatchContext.Provider value={dispatch}>
-            <BrowserRouter>
-              <ToasterContainer autoHideDuration={2000}>
-                <Header />
-                <Switch>
-                  <Route path="/">{state.loggedIn ? <Home /> : <HomeGuest />}</Route>
-                </Switch>
-              </ToasterContainer>
-            </BrowserRouter>
+            <App />
           </DispatchContext.Provider>
         </StateContext.Provider>
       </BaseProvider>
