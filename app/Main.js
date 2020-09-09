@@ -23,7 +23,9 @@ function Main() {
       username: localStorage.getItem("baseWebAppUsername"),
       avatar: localStorage.getItem("baseWebAppAvatar")
     },
-    lightTheme: true
+    isChatOpen: false,
+    unreadChatCount: 0,
+    lightTheme: Boolean(JSON.parse(localStorage.getItem("baseWebAppTheme")))
   }
 
   function ourReducer(draft, action) {
@@ -38,6 +40,15 @@ function Main() {
         return
       case "handleTheme":
         draft.lightTheme = !draft.lightTheme
+        return
+      case "toggleChat":
+        draft.isChatOpen = !draft.isChatOpen
+        return
+      case "incrementUnreadChatCount":
+        draft.unreadChatCount++
+        return
+      case "clearUnreadChatCount":
+        draft.unreadChatCount = 0
         return
     }
   }
@@ -55,6 +66,10 @@ function Main() {
       localStorage.removeItem("baseWebAppAvatar")
     }
   }, [state.loggedIn])
+
+  useEffect(() => {
+    localStorage.setItem("baseWebAppTheme", state.lightTheme)
+  }, [state.lightTheme])
 
   return (
     <StyletronProvider value={engine}>

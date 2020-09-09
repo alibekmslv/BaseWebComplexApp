@@ -1,13 +1,12 @@
 import React, { useContext } from "react"
-import { useStyletron } from "baseui"
 import { useHistory } from "react-router-dom"
+import { useStyletron } from "baseui"
 import { StyledLink } from "baseui/link"
-import { appHeaderLogo } from "./Style"
 
+import { appHeaderLogo } from "./Style"
+import StateContext from "../StateContext"
 import HeaderItemsLoggedIn from "./HeaderItemsLoggedIn"
 import HeaderItemsLoggedOut from "./HeaderItemsLoggedOut"
-
-import StateContext from "../StateContext"
 
 function HeaderFlex() {
   const appState = useContext(StateContext)
@@ -29,7 +28,8 @@ function HeaderFlex() {
     paddingTop: theme.sizing.scale500,
     paddingBottom: theme.sizing.scale500,
     paddingLeft: theme.sizing.scale800,
-    paddingRight: theme.sizing.scale800
+    paddingRight: theme.sizing.scale800,
+    flexShrink: "0"
   })
 
   return (

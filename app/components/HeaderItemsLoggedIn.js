@@ -1,7 +1,6 @@
 import React, { useEffect, useContext, useState, useRef } from "react"
-import { Input } from "baseui/input"
 import { Avatar } from "baseui/avatar"
-import { Search, Menu, Overflow } from "baseui/icon"
+import { Menu, Overflow } from "baseui/icon"
 import { Button, KIND, SIZE } from "baseui/button"
 import { useStyletron } from "baseui"
 import { headerMenu, inline } from "./Style"
@@ -9,6 +8,7 @@ import { headerMenu, inline } from "./Style"
 import DispatchContext from "../DispatchContext"
 import StateContext from "../StateContext"
 import { useHistory, Link } from "react-router-dom"
+import Search from "./Search"
 
 function HeaderItemsLoggedIn() {
   const appDispatch = useContext(DispatchContext)
@@ -21,6 +21,7 @@ function HeaderItemsLoggedIn() {
   const menuToggleRef = useRef(null)
 
   const headerSearchStyle = css({
+    position: "relative",
     flexBasis: "100%",
     marginTop: theme.sizing.scale400,
     order: 3,
@@ -74,6 +75,17 @@ function HeaderItemsLoggedIn() {
     }
   })
 
+  const chatUnreadLabel = css({
+    position: "absolute",
+    top: "10px",
+    right: "6px",
+    backgroundColor: theme.colors.backgroundAccent,
+    width: "11px",
+    height: "11px",
+    borderRadius: "50%"
+  })
+  console.log(theme.animation.timing200)
+
   const handleNav = e => {
     e.preventDefault()
     history.push(e.target.pathname)
@@ -103,12 +115,12 @@ function HeaderItemsLoggedIn() {
   return (
     <>
       <div className={headerSearchStyle}>
-        <Input startEnhancer={() => <Search />} placeholder="Search" />
+        <Search />
       </div>
       <div className={css(headerMenu)}>
         <Button
           title="Chat"
-          kind={"secondary"}
+          kind="minimal"
           overrides={{
             BaseButton: {
               style: ({ $theme }) => ({
@@ -116,8 +128,13 @@ function HeaderItemsLoggedIn() {
               })
             }
           }}
+          onClick={() => {
+            appDispatch({ type: "toggleChat" })
+          }}
+          className={css({ position: "relative" })}
         >
-          <Overflow size={20} />
+          💬
+          {appState.unreadChatCount ? <span className={chatUnreadLabel}></span> : null}
         </Button>
         <nav className={headerMenuNavList} ref={wrapperRef}>
           <ul>

@@ -8,9 +8,10 @@ export const appHeaderLogo = {
 
 export const headerMenu = {
   display: "flex",
-  alignItems: "center",
+  alignItems: "flex-start",
   order: 2,
-  postion: "relative"
+  postion: "relative",
+  zIndex: "100"
 }
 export const inline = {
   display: "inline"
