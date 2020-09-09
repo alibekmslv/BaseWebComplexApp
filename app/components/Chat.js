@@ -2,13 +2,12 @@ import React, { useEffect, useContext, useRef } from "react"
 import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
 import { useImmer } from "use-immer"
-import io, { Socket } from "socket.io-client"
+import io from "socket.io-client"
 import { Link } from "react-router-dom"
 import { Block } from "baseui/block"
 import { useStyletron } from "baseui"
 import { ChevronDown } from "baseui/icon"
 import { Input } from "baseui/input"
-import { Root } from "baseui/toast"
 
 function Chat() {
   const socket = useRef(null)
@@ -38,7 +37,10 @@ function Chat() {
       })
     })
 
-    return () => socket.current.disconnect()
+    return () => {
+      appDispatch({ type: "toggleChat" })
+      socket.current.disconnect()
+    }
   }, [])
 
   useEffect(() => {

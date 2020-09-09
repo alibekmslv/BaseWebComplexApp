@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { useStyletron } from "baseui"
 import { Block } from "baseui/block"
 import { Link } from "react-router-dom"

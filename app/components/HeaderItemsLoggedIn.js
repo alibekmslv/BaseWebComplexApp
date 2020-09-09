@@ -1,14 +1,13 @@
-import React, { useEffect, useContext, useState, useRef } from "react"
-import { Avatar } from "baseui/avatar"
-import { Menu, Overflow } from "baseui/icon"
-import { Button, KIND, SIZE } from "baseui/button"
+import React, { useEffect, useContext, useState, useRef, Suspense } from "react"
+import { Menu } from "baseui/icon"
+import { Button, KIND } from "baseui/button"
 import { useStyletron } from "baseui"
 import { headerMenu, inline } from "./Style"
 
 import DispatchContext from "../DispatchContext"
 import StateContext from "../StateContext"
 import { useHistory, Link } from "react-router-dom"
-import Search from "./Search"
+const Search = React.lazy(() => import("./Search"))
 
 function HeaderItemsLoggedIn() {
   const appDispatch = useContext(DispatchContext)
@@ -84,7 +83,6 @@ function HeaderItemsLoggedIn() {
     height: "11px",
     borderRadius: "50%"
   })
-  console.log(theme.animation.timing200)
 
   const handleNav = e => {
     e.preventDefault()
@@ -115,7 +113,9 @@ function HeaderItemsLoggedIn() {
   return (
     <>
       <div className={headerSearchStyle}>
-        <Search />
+        <Suspense fallback={""}>
+          <Search />
+        </Suspense>
       </div>
       <div className={css(headerMenu)}>
         <Button

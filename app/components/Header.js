@@ -8,10 +8,11 @@ import StateContext from "../StateContext"
 import HeaderItemsLoggedIn from "./HeaderItemsLoggedIn"
 import HeaderItemsLoggedOut from "./HeaderItemsLoggedOut"
 
-function HeaderFlex() {
+function Header(props) {
   const appState = useContext(StateContext)
   const [css, theme] = useStyletron()
   const history = useHistory()
+  const headerContent = appState.loggedIn ? <HeaderItemsLoggedIn /> : <HeaderItemsLoggedOut />
 
   const handleNav = e => {
     e.preventDefault()
@@ -39,9 +40,9 @@ function HeaderFlex() {
           Base Web App
         </StyledLink>
       </div>
-      {appState.loggedIn ? <HeaderItemsLoggedIn /> : <HeaderItemsLoggedOut />}
+      {!props.staticEmpty ? headerContent : null}
     </header>
   )
 }
 
-export default HeaderFlex
+export default Header

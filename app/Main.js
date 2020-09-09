@@ -5,14 +5,16 @@ import { Client as Styletron } from "styletron-engine-atomic"
 import { Provider as StyletronProvider } from "styletron-react"
 import { LightTheme, DarkTheme, BaseProvider, styled } from "baseui"
 import Axios from "axios"
-Axios.defaults.baseURL = "http://localhost:8080"
+Axios.defaults.baseURL = process.env.BACKENDURL || ""
 
 import StateContext from "./StateContext"
 import DispatchContext from "./DispatchContext"
 
 import App from "./App"
 
-const engine = new Styletron()
+const engine = new Styletron({
+  hydrate: document.getElementsByClassName("_styletron_hydrate_")
+})
 
 function Main() {
   const initialState = {
