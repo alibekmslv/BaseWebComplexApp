@@ -15,6 +15,7 @@ import { Textarea } from 'baseui/textarea'
 import { Button } from 'baseui/button'
 import { toaster } from 'baseui/toast'
 import { useStyletron } from 'baseui'
+import { ArrowLeft } from 'baseui/icon'
 
 function EditPost(props) {
     const appState = useContext(StateContext)
@@ -117,8 +118,9 @@ function EditPost(props) {
                 await Axios.post(`/post/${state.id}/edit`, { title: state.title.value, body: state.body.value, token: appState.user.token }, { cancelToken: ourRequest.token })
                 dispatch({ type: 'saveRequestFinished' })
                 toaster.positive('Post was succefully updated.')
+                props.history.push(`/post/${state.id}`)
             } catch (e) {
-                console.log('There was a problem or request has been canceled')
+                toaster.negative('There was a problem or request has been canceled')
             }
         }
         if (state.sendCount) {
@@ -146,13 +148,14 @@ function EditPost(props) {
 
     const backToPageLink = css({
         ...theme.typography.ParagraphSmall,
-        color: theme.colors.primaryA
+        color: theme.colors.primaryA,
+        textDecoration: 'none'
     })
 
     return (
         <Page title="Edit Post">
             <Link to={`/post/${state.id}`} className={backToPageLink}>
-        &laquo; Back to post permalink
+                <ArrowLeft size={20} className={css({verticalAlign: 'sub'})}/> Back to post permalink
             </Link>
             <Grid>
                 <Cell skip={[0, 1, 2]} span={[4, 6, 8]}>
@@ -165,7 +168,7 @@ function EditPost(props) {
                                 <Textarea id="post-body" onBlur={e => dispatch({ type: 'bodyRules', value: e.target.value })} value={state.body.value} onChange={e => dispatch({ type: 'bodyChange', value: e.target.value })} />
                             </FormControl>
                             <Button onClick={submitHandler} disabled={state.isSaving}>
-                Save Updates
+                                Save Updates
                             </Button>
                         </form>
                     </Block>

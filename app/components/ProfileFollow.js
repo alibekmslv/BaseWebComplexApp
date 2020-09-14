@@ -43,7 +43,10 @@ function ProfileFollow(props) {
     const postListItem = css({
         display: 'block',
         maxWidth: '400px',
-        padding: theme.sizing.scale300,
+        paddingTop: theme.sizing.scale300,
+        paddingBottom: theme.sizing.scale300,
+        paddingLeft: theme.sizing.scale500,
+        paddingRight: theme.sizing.scale500,
         marginBottom: theme.sizing.scale600,
         borderWidth: '2px',
         borderStyle: 'solid',

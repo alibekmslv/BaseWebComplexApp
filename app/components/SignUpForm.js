@@ -202,7 +202,7 @@ function SignUpForm() {
                 toaster.positive('You have succefully created account')
             } catch (e) {
                 console.log('something went wrong')
-                toaster.negative('There was a problem or the reques was canceled')
+                toaster.negative('There was a problem or the requesе was canceled.')
             }
         }
 

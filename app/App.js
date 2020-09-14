@@ -20,13 +20,27 @@ import LoadingCircleIcon from './components/LoadingCircleIcon'
 import OverallPageContainer from './components/OverallPageContainer'
 import NotFound from './components/NotFound'
 
+const toasterOverride = {
+    Root: {
+        style: ({$theme}) => {
+            return { 
+                zIndex: 100, 
+                marginTop: $theme.sizing.scale200,
+                [$theme.mediaQuery.medium]: {
+                    marginTop: '84px'
+                }
+            }
+        }
+    }
+}
+
 function App() {
     const appState = useContext(StateContext)
 
     return (
         <BrowserRouter>
             <OverallPageContainer>
-                <ToasterContainer autoHideDuration={2000}>
+                <ToasterContainer autoHideDuration={3000} placement={'topRight'} overrides={toasterOverride}>
                     <Header />
                     <Suspense fallback={<LoadingCircleIcon />}>
                         <Switch>
@@ -39,14 +53,17 @@ function App() {
                             <Route path="/post/:id/edit" exact>
                                 <EditPost />
                             </Route>
-                            <Route path="/create-post">
+                            <Route path="/create-post" exact>
                                 <CreatePost />
                             </Route>
-                            <Route path="/about-us">
+                            <Route path="/about-us" exact>
                                 <AboutUs />
                             </Route>
-                            <Route path="/privacy-policy">
+                            <Route path="/privacy-policy" exact>
                                 <Privacy />
+                            </Route>
+                            <Route path="/login" exact>
+                                <HomeGuest />
                             </Route>
                             <Route path="/" exact>
                                 {appState.loggedIn ? <Home /> : <HomeGuest />}

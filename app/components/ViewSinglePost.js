@@ -11,6 +11,7 @@ import StateContext from '../StateContext'
 import Page from './Page'
 import NotFound from './NotFound'
 import LoadingCircleIcon from './LoadingCircleIcon'
+import { toaster } from 'baseui/toast'
 
 function ViewSinglePost(props) {
     const appState = useContext(StateContext)
@@ -68,7 +69,7 @@ function ViewSinglePost(props) {
                 })
                 if (response.data == 'Success') {
                     // 1. display a flash message
-                    // appDispatch({ type: "flashMessage", value: "Post was succefully deleted" })
+                    toaster.positive('Post was succefully deleted')
 
                     // 2. redirect to home page
                     props.history.push(`/profile/${appState.user.username}`)

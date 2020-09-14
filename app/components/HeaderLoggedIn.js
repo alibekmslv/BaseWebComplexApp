@@ -7,6 +7,7 @@ import { headerMenu, inline } from './Style'
 import DispatchContext from '../DispatchContext'
 import StateContext from '../StateContext'
 import { useHistory, Link } from 'react-router-dom'
+import { toaster } from 'baseui/toast'
 const Search = React.lazy(() => import('./Search'))
 
 function HeaderLoggedIn() {
@@ -152,6 +153,8 @@ function HeaderLoggedIn() {
                             <Button
                                 title="Logout"
                                 onClick={() => {
+                                    history.push('/')
+                                    toaster.show('You have succefully logged out.')
                                     appDispatch({ type: 'logout' })
                                 }}
                             >

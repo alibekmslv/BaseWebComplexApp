@@ -7,6 +7,7 @@ import { Input } from 'baseui/input'
 import { Textarea } from 'baseui/textarea'
 import { Button } from 'baseui/button'
 import { ParagraphMedium } from 'baseui/typography'
+import { toaster } from 'baseui/toast'
 
 import { withRouter } from 'react-router-dom'
 import StateContext from '../StateContext'
@@ -41,10 +42,9 @@ function CreatePost(props) {
             const response = await Axios.post('/create-post', { title, body, token: appState.user.token })
             //Redirect to new post url
             props.history.push(`/post/${response.data}`)
-            // appDispatch({ type: "flashMessage", value: "Congrats, you succefully created a post." })
-            console.log('Post has been succefully created')
+            toaster.positive('Congrats, you succefully created a post.')
         } catch (e) {
-            console.log('Some error happened')
+            toaster.negative('Some error happened')
         }
     }
 

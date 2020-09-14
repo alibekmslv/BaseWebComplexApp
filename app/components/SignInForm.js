@@ -134,13 +134,13 @@ function SignInForm() {
                 </StyledBody>
                 <StyledAction>
                     <Button onClick={handleSubmit} type="submit" overrides={{ BaseButton: { style: { width: '100%' } } }}>
-            Sign In
+                        Sign In
                     </Button>
                     <Block className={css({ textAlign: 'center' })} marginTop={['scale300']}>
-            or
+                        or
                         <br />
                         <StyledLink href="/login" onClick={handleNavigation}>
-              Sign Up
+                            Sign Up
                         </StyledLink>
                     </Block>
                 </StyledAction>
